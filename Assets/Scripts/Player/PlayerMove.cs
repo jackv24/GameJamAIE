@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
+    public float acceleration = 15.0f;
 
     [Space()]
     public float gravity = 9.8f;
@@ -22,6 +23,7 @@ public class PlayerMove : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
+        //If no camera sets it's transform values, use player transform instead
         cameraForward = transform.forward;
         cameraRight = transform.right;
     }
@@ -31,10 +33,11 @@ public class PlayerMove : MonoBehaviour
         if(controller)
         {
             //Get directional input
-            inputVector.x = Input.GetAxisRaw("Horizontal");
-            inputVector.y = Input.GetAxisRaw("Vertical");
+            inputVector.x = Mathf.Lerp(inputVector.x, Input.GetAxisRaw("Horizontal"), acceleration * Time.deltaTime);
+            inputVector.y = Mathf.Lerp(inputVector.y, Input.GetAxisRaw("Vertical"), acceleration * Time.deltaTime);
 
-            inputVector.Normalize();
+            if(inputVector.magnitude > 1)
+                inputVector.Normalize();
 
             //Reset to zero for additive calculations below
             moveVector.x = 0;

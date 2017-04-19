@@ -17,11 +17,13 @@ public class PlayerStats : MonoBehaviour
 
     public void RemoveHealth(int amount)
     {
+        //Use private ChangeHealth function to handle clamping health, death, etc.
         ChangeHealth(-amount);
     }
 
     public void AddHealth(int amount)
     {
+        //Use private ChangeHealth function to handle clamping health, death, etc.
         ChangeHealth(amount);
     }
 
@@ -29,6 +31,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth += amount;
 
+        //Clamp health between 0 and max
         if (currentHealth < 0)
             currentHealth = 0;
         else if (currentHealth > maxHealth)

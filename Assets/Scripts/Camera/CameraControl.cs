@@ -53,10 +53,9 @@ public class CameraControl : MonoBehaviour
             transform.position += transform.rotation * Vector3.back * distance;
             transform.position += Vector3.up * height;
 
+            //Update camera transform values on the player move script
             if(move)
-            {
                 move.SetCameraValues(transform.forward, transform.right);
-            }
         }
     }
 }

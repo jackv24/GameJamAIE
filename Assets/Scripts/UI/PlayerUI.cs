@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    [Tooltip("The PlayerStats that this UI represents.")]
     public PlayerStats targetStats;
 
     [Space()]
@@ -18,9 +19,9 @@ public class PlayerUI : MonoBehaviour
 
     void Start()
     {
+        //Cache initial strings for formatting
         if (healthText)
             healthTextString = healthText.text;
-
         if (scoreText)
             scoreTextString = scoreText.text;
     }
@@ -29,12 +30,15 @@ public class PlayerUI : MonoBehaviour
     {
         if(targetStats)
         {
+            //Update health slider value
             if (healthSlider)
                 healthSlider.value = (float)targetStats.currentHealth / targetStats.maxHealth;
 
+            //Update formatted health text fields
             if (healthText)
                 healthText.text = string.Format(healthTextString, targetStats.currentHealth, targetStats.maxHealth);
 
+            //Update formatted score text field
             if (scoreText)
                 scoreText.text = string.Format(scoreTextString, targetStats.score);
         }
