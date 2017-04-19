@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
+    public float acceleration = 15.0f;
 
     [Space()]
     public float gravity = 9.8f;
     public float jumpForce = 10.0f;
+
+    [Space()]
+    [Tooltip("The time after leaving the ground in which the player is still allowed to jump.")]
+    public float jumpStopDelay = 0.1f;
+    private float jumpStopTime;
 
     private Vector2 inputVector;
     private Vector3 moveVector;
@@ -22,6 +28,7 @@ public class PlayerMove : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
+        //If no camera sets it's transform values, use player transform instead
         cameraForward = transform.forward;
         cameraRight = transform.right;
     }
@@ -31,10 +38,11 @@ public class PlayerMove : MonoBehaviour
         if(controller)
         {
             //Get directional input
-            inputVector.x = Input.GetAxisRaw("Horizontal");
-            inputVector.y = Input.GetAxisRaw("Vertical");
+            inputVector.x = Mathf.Lerp(inputVector.x, Input.GetAxisRaw("Horizontal"), acceleration * Time.deltaTime);
+            inputVector.y = Mathf.Lerp(inputVector.y, Input.GetAxisRaw("Vertical"), acceleration * Time.deltaTime);
 
-            inputVector.Normalize();
+            if(inputVector.magnitude > 1)
+                inputVector.Normalize();
 
             //Reset to zero for additive calculations below
             moveVector.x = 0;
@@ -44,12 +52,19 @@ public class PlayerMove : MonoBehaviour
             moveVector += inputVector.y * moveSpeed * cameraForward;
             moveVector += inputVector.x * moveSpeed * cameraRight;
 
+            if (controller.isGrounded)
+                jumpStopTime = Time.time + jumpStopDelay;
+
             //Apply gravity if the controller is not grounded
             if(!controller.isGrounded)
                 moveVector.y -= gravity * Time.deltaTime;
 
-            if (Input.GetButtonDown("Jump") && controller.isGrounded)
+            if (Input.GetButtonDown("Jump") && Time.time <= jumpStopTime)
+            {
+                jumpStopTime = 0;
+
                 moveVector.y = jumpForce;
+            }
 
             //Finally, move controller
             controller.Move(moveVector * Time.deltaTime);
