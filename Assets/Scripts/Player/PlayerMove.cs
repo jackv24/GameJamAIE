@@ -11,6 +11,11 @@ public class PlayerMove : MonoBehaviour
     public float gravity = 9.8f;
     public float jumpForce = 10.0f;
 
+    [Space()]
+    [Tooltip("The time after leaving the ground in which the player is still allowed to jump.")]
+    public float jumpStopDelay = 0.1f;
+    private float jumpStopTime;
+
     private Vector2 inputVector;
     private Vector3 moveVector;
 
@@ -47,12 +52,19 @@ public class PlayerMove : MonoBehaviour
             moveVector += inputVector.y * moveSpeed * cameraForward;
             moveVector += inputVector.x * moveSpeed * cameraRight;
 
+            if (controller.isGrounded)
+                jumpStopTime = Time.time + jumpStopDelay;
+
             //Apply gravity if the controller is not grounded
             if(!controller.isGrounded)
                 moveVector.y -= gravity * Time.deltaTime;
 
-            if (Input.GetButtonDown("Jump") && controller.isGrounded)
+            if (Input.GetButtonDown("Jump") && Time.time <= jumpStopTime)
+            {
+                jumpStopTime = 0;
+
                 moveVector.y = jumpForce;
+            }
 
             //Finally, move controller
             controller.Move(moveVector * Time.deltaTime);

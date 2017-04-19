@@ -123,8 +123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  acceleration: 15
   gravity: 40
   jumpForce: 15
+  jumpStopDelay: 0.1
 --- !u!114 &114760853822276710
 MonoBehaviour:
   m_ObjectHideFlags: 1
