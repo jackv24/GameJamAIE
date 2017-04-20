@@ -89,6 +89,9 @@ public class PlayerMove : MonoBehaviour
                 }
             }
 
+            //Face forward
+            transform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
+
             //Finally, move controller
             controller.Move(moveVector * Time.deltaTime);
         }
