@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114370811559192034}
   - component: {fileID: 114632245267646428}
   - component: {fileID: 114760853822276710}
+  - component: {fileID: 114547777138222900}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -124,6 +125,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerIndex: 0
+--- !u!114 &114547777138222900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1482010056874594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08970b5f8214c104890a4bf709c24994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 0}
+  groundReticlePrefab: {fileID: 1206181720073024, guid: 078f5f199893f234e921168bc21f5db7,
+    type: 2}
+  maxAimDistance: 15
+  aimCam: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &114632245267646428
 MonoBehaviour:
   m_ObjectHideFlags: 1

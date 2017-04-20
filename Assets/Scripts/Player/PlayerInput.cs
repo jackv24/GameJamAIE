@@ -20,9 +20,12 @@ public class PlayerInput : MonoBehaviour
 
     public InputControl jump;
 
-    void Start()
+    public InputControl aim;
+
+    public void Setup()
     {
-        device = InputManager.Devices[controllerIndex];
+        if(controllerIndex < InputManager.Devices.Count)
+            device = InputManager.Devices[controllerIndex];
 
         if(device != null)
         {
@@ -34,6 +37,8 @@ public class PlayerInput : MonoBehaviour
             cameraY = device.GetControl(InputControlType.RightStickY);
 
             jump = device.GetControl(InputControlType.Action1);
+
+            aim = device.GetControl(InputControlType.RightTrigger);
         }
     }
 }
