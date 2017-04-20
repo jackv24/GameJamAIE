@@ -105,7 +105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   distance: 10
-  distanceStep: 0.1
+  zoomInSpeed: 20
+  zoomOutSpeed: 5
   clippingLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -114,7 +115,6 @@ MonoBehaviour:
   pitch: 0
   pitchMin: -5
   pitchMax: 60
-  zoomSpeed: 10
 --- !u!124 &124758591168954068
 Behaviour:
   m_ObjectHideFlags: 1
