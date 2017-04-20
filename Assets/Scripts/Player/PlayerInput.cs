@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
 
     private InputDevice device;
 
+    public bool ControllerConnected { get { return device != null; } }
+
     //Controller mappings
     public InputControl moveX;
     public InputControl moveY;

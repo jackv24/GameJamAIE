@@ -44,8 +44,8 @@ public class CameraControl : MonoBehaviour
         if (target)
         {
             Vector2 input = new Vector2(
-                playerInput.cameraX + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse X") : 0),
-                playerInput.cameraY + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse Y") : 0)
+                (playerInput.ControllerConnected ? playerInput.cameraX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse X") : 0),
+                (playerInput.ControllerConnected ? playerInput.cameraY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse Y") : 0)
                 ) * sensitivity;
 
             //Move camera up/down

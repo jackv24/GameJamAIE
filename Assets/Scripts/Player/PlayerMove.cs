@@ -42,12 +42,12 @@ public class PlayerMove : MonoBehaviour
             //Get directional input
             inputVector.x = Mathf.Lerp(
                 inputVector.x,
-                playerInput.moveX + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
+                (playerInput.ControllerConnected ? playerInput.moveX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
                 acceleration * Time.deltaTime);
 
             inputVector.y = Mathf.Lerp(
                 inputVector.y,
-                playerInput.moveY + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
+                (playerInput.ControllerConnected ? playerInput.moveY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
                 acceleration * Time.deltaTime);
 
             if(inputVector.magnitude > 1)
@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
             if(!controller.isGrounded)
                 moveVector.y -= gravity * Time.deltaTime;
 
-            if ((playerInput.jump.WasPressed || Input.GetButtonDown("Jump")) && Time.time <= jumpStopTime)
+            if (((playerInput.ControllerConnected ? playerInput.jump.WasPressed : false) || Input.GetButtonDown("Jump")) && Time.time <= jumpStopTime)
             {
                 jumpStopTime = 0;
 
