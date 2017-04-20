@@ -9,6 +9,7 @@ public class pickupItems : MonoBehaviour {
     public bool DoYouWantBob = true;
     public float bobCentre = 1.5f;
     public float bobSpeed = 3;
+    public float bobVarition = 1;
     
     float bobHeight;
     bool GoUp;
@@ -31,7 +32,7 @@ public class pickupItems : MonoBehaviour {
         if (DoYouWantBob)
         {
             Vector3 pos = transform.position;
-            pos.y = Mathf.Sin(Time.time * bobSpeed) + bobCentre;
+            pos.y = pos.y + Mathf.Sin(Time.time * bobSpeed) / bobVarition;
             transform.position = pos;
         }
 

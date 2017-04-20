@@ -372,6 +372,7 @@ MonoBehaviour:
   DoYouWantBob: 1
   bobCentre: 1.5
   bobSpeed: 3
+  bobVarition: 40
 --- !u!23 &1694191384
 MeshRenderer:
   m_ObjectHideFlags: 0
