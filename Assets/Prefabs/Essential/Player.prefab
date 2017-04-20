@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4374865043357944}
   - component: {fileID: 33871359082507728}
   - component: {fileID: 23710347763866546}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114370811559192034}
   - component: {fileID: 114632245267646428}
   - component: {fileID: 114760853822276710}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be44b60f757c5f4459f5b2bb018e39fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerIndex: 0
 --- !u!114 &114632245267646428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +139,7 @@ MonoBehaviour:
   acceleration: 15
   gravity: 40
   jumpForce: 15
+  airJumpAmount: 1
   jumpStopDelay: 0.1
 --- !u!114 &114760853822276710
 MonoBehaviour:

@@ -9,6 +9,10 @@ public class CameraControl : MonoBehaviour
 
     [Space()]
     public float distance = 10.0f;
+    public float zoomInSpeed = 20.0f;
+    public float zoomOutSpeed = 5.0f;
+    private float currentDistance;
+    public LayerMask clippingLayer;
 
     [Space()]
     public float height = 1.5f;
@@ -18,9 +22,6 @@ public class CameraControl : MonoBehaviour
     public float pitch = 0.0f;
     public float pitchMin = -5.0f;
     public float pitchMax = 60.0f;
-
-    [Space()]
-    public float zoomSpeed = 10.0f;
 
     void Start()
     {
@@ -37,12 +38,23 @@ public class CameraControl : MonoBehaviour
             move = target.GetComponent<PlayerMove>();
             playerInput = target.GetComponent<PlayerInput>();
         }
+
+        currentDistance = distance;
     }
 
     void LateUpdate()
     {
         if (target)
         {
+            RaycastHit hitInfo;
+
+            //Ensure camera does not clip through geometry
+            if(Physics.Linecast(target.position, transform.position, out hitInfo, clippingLayer))
+                currentDistance = Mathf.Lerp(currentDistance, hitInfo.distance, zoomInSpeed * Time.deltaTime);
+            else
+                currentDistance = Mathf.Lerp(currentDistance, distance, zoomOutSpeed * Time.deltaTime);
+
+            //Move camera
             Vector2 input = new Vector2(
                 (playerInput.ControllerConnected ? playerInput.cameraX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse X") : 0),
                 (playerInput.ControllerConnected ? playerInput.cameraY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse Y") : 0)
@@ -57,7 +69,7 @@ public class CameraControl : MonoBehaviour
             transform.localEulerAngles = new Vector3(pitch, transform.localEulerAngles.y, 0);
 
             transform.position = new Vector3(target.position.x, target.position.y, target.position.z);
-            transform.position += transform.rotation * Vector3.back * distance;
+            transform.position += transform.rotation * Vector3.back * currentDistance;
             transform.position += Vector3.up * height;
 
             //Update camera transform values on the player move script
