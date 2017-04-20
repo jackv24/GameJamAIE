@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
 
             PlayerUI hud = canvasObj.GetComponent<PlayerUI>();
             hud.targetStats = player.GetComponent<PlayerStats>();
+
+            PlayerAttack attack = player.GetComponent<PlayerAttack>();
+            attack.aimCam = cam;
         }
     }
 }
