@@ -9,7 +9,7 @@ public class pickupItems : MonoBehaviour {
     public bool DoYouWantBob = true;
     public float bobCentre = 1.5f;
     public float bobSpeed = 3;
-    public float bobVarition = 1;
+    public float bobVarition = 40;
     
     float bobHeight;
     bool GoUp;
