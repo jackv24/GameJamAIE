@@ -335,7 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a07129cee8d3c4f9a7631fa1b98c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 1665369771925000, guid: 64612d9faf9af1a429b60f88b101a637,
+    type: 2}
   bounceDetonateDelay: 0.25
 --- !u!114 &114422471054305720
 MonoBehaviour:
