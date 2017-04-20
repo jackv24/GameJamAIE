@@ -20,9 +20,10 @@ public class PlayerInput : MonoBehaviour
 
     public InputControl jump;
 
-    void Start()
+    public void Setup()
     {
-        device = InputManager.Devices[controllerIndex];
+        if(controllerIndex < InputManager.Devices.Count)
+            device = InputManager.Devices[controllerIndex];
 
         if(device != null)
         {
