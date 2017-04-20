@@ -5,6 +5,7 @@ public class CameraControl : MonoBehaviour
 {
     public Transform target;
     private PlayerMove move;
+    private PlayerInput playerInput;
 
     [Space()]
     public float distance = 10.0f;
@@ -32,14 +33,20 @@ public class CameraControl : MonoBehaviour
         }
 
         if (target)
+        {
             move = target.GetComponent<PlayerMove>();
+            playerInput = target.GetComponent<PlayerInput>();
+        }
     }
 
     void LateUpdate()
     {
         if (target)
         {
-            Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * sensitivity;
+            Vector2 input = new Vector2(
+                playerInput.cameraX + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse X") : 0),
+                playerInput.cameraY + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse Y") : 0)
+                ) * sensitivity;
 
             //Move camera up/down
             pitch -= input.y * Time.deltaTime;

@@ -23,10 +23,12 @@ public class PlayerMove : MonoBehaviour
     private Vector3 cameraRight;
 
     private CharacterController controller;
+    private PlayerInput playerInput;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        playerInput = GetComponent<PlayerInput>();
 
         //If no camera sets it's transform values, use player transform instead
         cameraForward = transform.forward;
@@ -38,8 +40,15 @@ public class PlayerMove : MonoBehaviour
         if(controller)
         {
             //Get directional input
-            inputVector.x = Mathf.Lerp(inputVector.x, Input.GetAxisRaw("Horizontal"), acceleration * Time.deltaTime);
-            inputVector.y = Mathf.Lerp(inputVector.y, Input.GetAxisRaw("Vertical"), acceleration * Time.deltaTime);
+            inputVector.x = Mathf.Lerp(
+                inputVector.x,
+                playerInput.moveX + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
+                acceleration * Time.deltaTime);
+
+            inputVector.y = Mathf.Lerp(
+                inputVector.y,
+                playerInput.moveY + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
+                acceleration * Time.deltaTime);
 
             if(inputVector.magnitude > 1)
                 inputVector.Normalize();
@@ -59,7 +68,7 @@ public class PlayerMove : MonoBehaviour
             if(!controller.isGrounded)
                 moveVector.y -= gravity * Time.deltaTime;
 
-            if (Input.GetButtonDown("Jump") && Time.time <= jumpStopTime)
+            if ((playerInput.jump.WasPressed || Input.GetButtonDown("Jump")) && Time.time <= jumpStopTime)
             {
                 jumpStopTime = 0;
 
