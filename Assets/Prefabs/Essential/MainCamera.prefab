@@ -105,7 +105,7 @@ MonoBehaviour:
   height: 2.5
   sensitivity: 200
   pitch: 0
-  pitchMin: -5
+  pitchMin: -10
   pitchMax: 60
 --- !u!124 &124758591168954068
 Behaviour:
