@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class pickupItems : MonoBehaviour {
 
-    public int score;
-    public float rotSpeed;
-    public bool DoYouWantBob;
-    public float bobCentre;
-    public float bobSpeed;
+    public int score = 1;
+    public float rotSpeed = 20;
+    public bool DoYouWantBob = true;
+    public float bobCentre = 1.5f;
+    public float bobSpeed = 3;
     
     float bobHeight;
     bool GoUp;
