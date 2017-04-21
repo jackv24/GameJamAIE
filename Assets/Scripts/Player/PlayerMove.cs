@@ -69,6 +69,17 @@ public class PlayerMove : MonoBehaviour
             moveVector += inputVector.y * moveSpeed * cameraForward;
             moveVector += inputVector.x * moveSpeed * cameraRight;
 
+            //Apply gravity if the controller is not grounded
+            if (!controller.isGrounded)
+            {
+                moveVector.y -= gravity * Time.deltaTime;
+
+                if (impactVector.y > 0)
+                    impactVector.y -= gravity * Time.deltaTime;
+            }
+            else
+                moveVector.y = 0;
+
             if (controller.isGrounded)
             {
                 jumpStopTime = Time.time + jumpStopDelay;
@@ -90,15 +101,6 @@ public class PlayerMove : MonoBehaviour
                     moveVector.y = jumpForce;
                 }
             }
-        }
-
-        //Apply gravity if the controller is not grounded
-        if (!controller.isGrounded)
-        {
-            moveVector.y -= gravity * Time.deltaTime;
-
-            if(impactVector.y > 0)
-                impactVector.y -= gravity * Time.deltaTime;
         }
 
         //Face forward
