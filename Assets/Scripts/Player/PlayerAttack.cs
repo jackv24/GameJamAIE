@@ -95,7 +95,8 @@ public class PlayerAttack : MonoBehaviour
                 float angleBetweenObjects = Vector3.Angle(Vector3.forward, planarTarget - planarPosition) * (bomb.transform.position.x > p.x ? -1 : 1);
                 Vector3 finalVelocity = Quaternion.AngleAxis(angleBetweenObjects, Vector3.up) * velocity;
 
-                body.AddForce(finalVelocity, ForceMode.VelocityChange);
+                if(finalVelocity.magnitude != 0)
+                    body.AddForce(finalVelocity, ForceMode.VelocityChange);
             }
         }
         else if (reticle.activeSelf)
