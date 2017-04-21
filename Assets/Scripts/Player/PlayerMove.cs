@@ -42,9 +42,9 @@ public class PlayerMove : MonoBehaviour
     {
         if(controller)
         {
+            //Get directional input
             if (GameManager.instance.gameRunning)
             {
-                //Get directional input
                 inputVector.x = Mathf.Lerp(
                     inputVector.x,
                     (playerInput.ControllerConnected ? playerInput.moveX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
@@ -54,59 +54,61 @@ public class PlayerMove : MonoBehaviour
                     inputVector.y,
                     (playerInput.ControllerConnected ? playerInput.moveY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
                     acceleration * Time.deltaTime);
-
-                if (inputVector.magnitude > 1)
-                    inputVector.Normalize();
-
-                //Reset to zero for additive calculations below
-                moveVector.x = 0;
-                moveVector.z = 0;
-
-                //Calculate move vector based on camera direction
-                moveVector += inputVector.y * moveSpeed * cameraForward;
-                moveVector += inputVector.x * moveSpeed * cameraRight;
-
-                if (controller.isGrounded)
-                {
-                    jumpStopTime = Time.time + jumpStopDelay;
-                    airJumpsLeft = airJumpAmount;
-                }
-
-                if (((playerInput.ControllerConnected ? playerInput.jump.WasPressed : false) || (playerInput.controllerIndex < 1 ? Input.GetButtonDown("Jump") : false)))
-                {
-                    if (Time.time <= jumpStopTime)
-                    {
-                        jumpStopTime = 0;
-
-                        moveVector.y = jumpForce;
-                    }
-                    else if (airJumpsLeft > 0)
-                    {
-                        airJumpsLeft--;
-
-                        moveVector.y = jumpForce;
-                    }
-                }
             }
+            else
+                inputVector = Vector2.zero;
 
-            //Apply gravity if the controller is not grounded
-            if (!controller.isGrounded)
-            {
-                moveVector.y -= gravity * Time.deltaTime;
+            if (inputVector.magnitude > 1)
+                inputVector.Normalize();
 
-                if(impactVector.y > 0)
-                    impactVector.y -= gravity * Time.deltaTime;
-            }
+            //Reset to zero for additive calculations below
+            moveVector.x = 0;
+            moveVector.z = 0;
 
-            //Face forward
-            transform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
-
-            //Finally, move controller
-            controller.Move((moveVector + impactVector) * Time.deltaTime);
+            //Calculate move vector based on camera direction
+            moveVector += inputVector.y * moveSpeed * cameraForward;
+            moveVector += inputVector.x * moveSpeed * cameraRight;
 
             if (controller.isGrounded)
-                impactVector = Vector3.Lerp(impactVector, Vector3.zero, 0.1f);
+            {
+                jumpStopTime = Time.time + jumpStopDelay;
+                airJumpsLeft = airJumpAmount;
+            }
+
+            if (((playerInput.ControllerConnected ? playerInput.jump.WasPressed : false) || (playerInput.controllerIndex < 1 ? Input.GetButtonDown("Jump") : false)) && GameManager.instance.gameRunning)
+            {
+                if (Time.time <= jumpStopTime)
+                {
+                    jumpStopTime = 0;
+
+                    moveVector.y = jumpForce;
+                }
+                else if (airJumpsLeft > 0)
+                {
+                    airJumpsLeft--;
+
+                    moveVector.y = jumpForce;
+                }
+            }
         }
+
+        //Apply gravity if the controller is not grounded
+        if (!controller.isGrounded)
+        {
+            moveVector.y -= gravity * Time.deltaTime;
+
+            if(impactVector.y > 0)
+                impactVector.y -= gravity * Time.deltaTime;
+        }
+
+        //Face forward
+        transform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
+
+        //Finally, move controller
+        controller.Move((moveVector + impactVector) * Time.deltaTime);
+
+        if (controller.isGrounded)
+            impactVector = Vector3.Lerp(impactVector, Vector3.zero, 0.1f);
     }
 
     public void SetCameraValues(Vector3 forward, Vector3 right)
