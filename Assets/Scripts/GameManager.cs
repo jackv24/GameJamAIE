@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public bool gameRunning = false;
+    private bool gameStarted = false;
     private bool[] readyPlayers;
     private PlayerUI[] playersUI;
 
@@ -68,19 +69,26 @@ public class GameManager : MonoBehaviour
 
     public void ReadyPlayer(int index)
     {
-        readyPlayers[index] = true;
+        if (!gameStarted)
+        {
+            readyPlayers[index] = true;
 
-        int readyAmount = 0;
+            int readyAmount = 0;
 
-        foreach (bool ready in readyPlayers)
-            if (ready)
-                readyAmount++;
+            foreach (bool ready in readyPlayers)
+                if (ready)
+                    readyAmount++;
 
-        if (playersUI[index])
-            playersUI[index].readyText.gameObject.SetActive(false);
+            if (playersUI[index])
+                playersUI[index].readyText.gameObject.SetActive(false);
 
-        if (readyAmount == readyPlayers.Length)
-            StartCoroutine("GameTimer");
+            if (readyAmount == readyPlayers.Length)
+            {
+                gameStarted = true;
+
+                StartCoroutine("GameTimer");
+            }
+        }
     }
 
     IEnumerator GameTimer()
