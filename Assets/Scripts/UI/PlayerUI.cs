@@ -17,6 +17,9 @@ public class PlayerUI : MonoBehaviour
     public Text scoreText;
     private string scoreTextString;
 
+    [Space()]
+    public Text readyText;
+
     void Start()
     {
         //Cache initial strings for formatting
