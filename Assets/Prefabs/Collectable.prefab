@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 136613714721929064}
   - component: {fileID: 23811279533827386}
   - component: {fileID: 114347675580586206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collectable
   m_TagString: Collectable
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   bobCentre: 1.5
   bobSpeed: 3
   bobVarition: 200
+  particles: {fileID: 0}
 --- !u!136 &136613714721929064
 CapsuleCollider:
   m_ObjectHideFlags: 1

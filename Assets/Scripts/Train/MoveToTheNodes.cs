@@ -6,7 +6,6 @@ public class MoveToTheNodes : MonoBehaviour {
 
     public float speed = 1.0F;
     public int currentNode = 0;
-    Transform startMarker;
     Transform endMarker;
 
     Vector3 lastPos;
@@ -18,7 +17,6 @@ public class MoveToTheNodes : MonoBehaviour {
 
     void Start()
     {
-        startMarker = selectorArr[currentNode].transform;
         currentNode++;
         endMarker = selectorArr[currentNode].transform;
     }
@@ -48,7 +46,6 @@ public class MoveToTheNodes : MonoBehaviour {
 
             if (Vector3.Distance(transform.position, endMarker.position) <= speed * Time.deltaTime)
             {
-                startMarker = endMarker;
                 currentNode++;
 
                 if (currentNode >= selectorArr.Length)

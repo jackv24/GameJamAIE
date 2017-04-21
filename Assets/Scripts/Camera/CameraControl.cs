@@ -13,6 +13,7 @@ public class CameraControl : MonoBehaviour
     public float zoomOutSpeed = 5.0f;
     private float currentDistance;
     public LayerMask clippingLayer;
+    public float padding = 0.25f;
 
     [Space()]
     public float height = 1.5f;
@@ -49,8 +50,8 @@ public class CameraControl : MonoBehaviour
             RaycastHit hitInfo;
 
             //Ensure camera does not clip through geometry
-            if(Physics.Linecast(target.position, transform.position, out hitInfo, clippingLayer))
-                currentDistance = Mathf.Lerp(currentDistance, hitInfo.distance, zoomInSpeed * Time.deltaTime);
+            if(Physics.Linecast(target.position + Vector3.up *  height, transform.position, out hitInfo, clippingLayer))
+                currentDistance = Mathf.Lerp(currentDistance, hitInfo.distance + padding, zoomInSpeed * Time.deltaTime);
             else
                 currentDistance = Mathf.Lerp(currentDistance, distance, zoomOutSpeed * Time.deltaTime);
 
