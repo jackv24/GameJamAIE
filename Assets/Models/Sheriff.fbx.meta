@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 2417e6cb7da7564419699f1b4c6eba51
+timeCreated: 1492731439
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_L
+    100002: Arm_R
+    100004: Beard
+    100006: Belt
+    100008: Body
+    100010: Collar
+    100012: Ear_L
+    100014: Ear_L1
+    100016: Hat
+    100018: head
+    100020: Leg_L
+    100022: Leg_R
+    100024: Mustache
+    100026: //RootNode
+    100028: Star_1
+    100030: Star_2
+    100032: Star_3
+    100034: Tie
+    400000: Arm_L
+    400002: Arm_R
+    400004: Beard
+    400006: Belt
+    400008: Body
+    400010: Collar
+    400012: Ear_L
+    400014: Ear_L1
+    400016: Hat
+    400018: head
+    400020: Leg_L
+    400022: Leg_R
+    400024: Mustache
+    400026: //RootNode
+    400028: Star_1
+    400030: Star_2
+    400032: Star_3
+    400034: Tie
+    2300000: Arm_L
+    2300002: Arm_R
+    2300004: Beard
+    2300006: Belt
+    2300008: Body
+    2300010: Collar
+    2300012: Ear_L
+    2300014: Ear_L1
+    2300016: Hat
+    2300018: head
+    2300020: Leg_L
+    2300022: Leg_R
+    2300024: Mustache
+    2300026: Star_1
+    2300028: Star_2
+    2300030: Star_3
+    2300032: Tie
+    3300000: Arm_L
+    3300002: Arm_R
+    3300004: Beard
+    3300006: Belt
+    3300008: Body
+    3300010: Collar
+    3300012: Ear_L
+    3300014: Ear_L1
+    3300016: Hat
+    3300018: head
+    3300020: Leg_L
+    3300022: Leg_R
+    3300024: Mustache
+    3300026: Star_1
+    3300028: Star_2
+    3300030: Star_3
+    3300032: Tie
+    4300000: Hat
+    4300002: head
+    4300004: Beard
+    4300006: Collar
+    4300008: Body
+    4300010: Tie
+    4300012: Belt
+    4300014: Leg_R
+    4300016: Star_1
+    4300018: Ear_L1
+    4300020: Arm_L
+    4300022: Leg_L
+    4300024: Ear_L
+    4300026: Star_2
+    4300028: Star_3
+    4300030: Mustache
+    4300032: Arm_R
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

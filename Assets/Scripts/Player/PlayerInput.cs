@@ -41,4 +41,10 @@ public class PlayerInput : MonoBehaviour
             aim = device.GetControl(InputControlType.RightTrigger);
         }
     }
+
+    void Update()
+    {
+        if (!GameManager.instance.gameRunning && ((device != null && device.AnyButtonWasPressed) || (controllerIndex < 1 && Input.GetButtonDown("Jump"))))
+            GameManager.instance.ReadyPlayer(controllerIndex);
+    }
 }

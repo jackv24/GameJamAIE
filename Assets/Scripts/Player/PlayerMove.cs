@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
 
     private Vector2 inputVector;
     private Vector3 moveVector;
+    private Vector3 impactVector;
 
     private Vector3 cameraForward;
     private Vector3 cameraRight;
@@ -41,59 +42,70 @@ public class PlayerMove : MonoBehaviour
     {
         if(controller)
         {
-            //Get directional input
-            inputVector.x = Mathf.Lerp(
-                inputVector.x,
-                (playerInput.ControllerConnected ? playerInput.moveX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
-                acceleration * Time.deltaTime);
-
-            inputVector.y = Mathf.Lerp(
-                inputVector.y,
-                (playerInput.ControllerConnected ? playerInput.moveY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
-                acceleration * Time.deltaTime);
-
-            if(inputVector.magnitude > 1)
-                inputVector.Normalize();
-
-            //Reset to zero for additive calculations below
-            moveVector.x = 0;
-            moveVector.z = 0;
-
-            //Calculate move vector based on camera direction
-            moveVector += inputVector.y * moveSpeed * cameraForward;
-            moveVector += inputVector.x * moveSpeed * cameraRight;
-
-            if (controller.isGrounded)
+            if (GameManager.instance.gameRunning)
             {
-                jumpStopTime = Time.time + jumpStopDelay;
-                airJumpsLeft = airJumpAmount;
+                //Get directional input
+                inputVector.x = Mathf.Lerp(
+                    inputVector.x,
+                    (playerInput.ControllerConnected ? playerInput.moveX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Horizontal") : 0),
+                    acceleration * Time.deltaTime);
+
+                inputVector.y = Mathf.Lerp(
+                    inputVector.y,
+                    (playerInput.ControllerConnected ? playerInput.moveY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Vertical") : 0),
+                    acceleration * Time.deltaTime);
+
+                if (inputVector.magnitude > 1)
+                    inputVector.Normalize();
+
+                //Reset to zero for additive calculations below
+                moveVector.x = 0;
+                moveVector.z = 0;
+
+                //Calculate move vector based on camera direction
+                moveVector += inputVector.y * moveSpeed * cameraForward;
+                moveVector += inputVector.x * moveSpeed * cameraRight;
+
+                if (controller.isGrounded)
+                {
+                    jumpStopTime = Time.time + jumpStopDelay;
+                    airJumpsLeft = airJumpAmount;
+                }
+
+                if (((playerInput.ControllerConnected ? playerInput.jump.WasPressed : false) || (playerInput.controllerIndex < 1 ? Input.GetButtonDown("Jump") : false)))
+                {
+                    if (Time.time <= jumpStopTime)
+                    {
+                        jumpStopTime = 0;
+
+                        moveVector.y = jumpForce;
+                    }
+                    else if (airJumpsLeft > 0)
+                    {
+                        airJumpsLeft--;
+
+                        moveVector.y = jumpForce;
+                    }
+                }
             }
 
             //Apply gravity if the controller is not grounded
-            if(!controller.isGrounded)
+            if (!controller.isGrounded)
+            {
                 moveVector.y -= gravity * Time.deltaTime;
 
-            if (((playerInput.ControllerConnected ? playerInput.jump.WasPressed : false) || Input.GetButtonDown("Jump")))
-            {
-                if (Time.time <= jumpStopTime)
-                {
-                    jumpStopTime = 0;
-
-                    moveVector.y = jumpForce;
-                }
-                else if(airJumpsLeft > 0)
-                {
-                    airJumpsLeft--;
-
-                    moveVector.y = jumpForce;
-                }
+                if(impactVector.y > 0)
+                    impactVector.y -= gravity * Time.deltaTime;
             }
 
             //Face forward
             transform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
 
             //Finally, move controller
-            controller.Move(moveVector * Time.deltaTime);
+            controller.Move((moveVector + impactVector) * Time.deltaTime);
+
+            if (controller.isGrounded)
+                impactVector = Vector3.Lerp(impactVector, Vector3.zero, 0.1f);
         }
     }
 
@@ -106,5 +118,15 @@ public class PlayerMove : MonoBehaviour
         cameraRight = right;
         cameraRight.y = 0;
         cameraRight.Normalize();
+    }
+
+    public void AddImpact(Vector3 direction, float force)
+    {
+        direction.Normalize();
+
+        if (direction.y < 0)
+            direction.y *= -1;
+
+        impactVector = direction * force;
     }
 }
