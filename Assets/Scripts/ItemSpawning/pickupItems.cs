@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class pickupItems : MonoBehaviour {
 
+    public delegate void StandardEvent();
+    public event StandardEvent OnPickup;
+
     public int score = 1;
     public float rotSpeed = 20;
     public bool DoYouWantBob = true;
@@ -31,6 +34,9 @@ public class pickupItems : MonoBehaviour {
         {
             Destroy(particle);
         }
+
+        if (OnPickup != null)
+            OnPickup();
     }
     void Update()
     {
