@@ -9,8 +9,11 @@ public class MoveToTheNodes : MonoBehaviour {
     Transform startMarker;
     Transform endMarker;
 
+    Vector3 lastPos;
+
     public GameObject[] selectorArr;
     bool startTrip = false;
+    public float angleBetween = 0.0F;
 
 
     void Start()
@@ -37,7 +40,13 @@ public class MoveToTheNodes : MonoBehaviour {
         {
             transform.position += (endMarker.position - transform.position).normalized * speed * Time.deltaTime;
 
-            if(Vector3.Distance(transform.position, endMarker.position) <= speed * Time.deltaTime)
+            Vector3 dir = transform.position - lastPos;
+            lastPos = transform.position;
+            dir.Normalize();
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir, Vector3.up), 0.25f);
+
+            if (Vector3.Distance(transform.position, endMarker.position) <= speed * Time.deltaTime)
             {
                 startMarker = endMarker;
                 currentNode++;
