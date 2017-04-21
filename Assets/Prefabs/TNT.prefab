@@ -369,6 +369,8 @@ MonoBehaviour:
   explosionPrefab: {fileID: 1665369771925000, guid: 64612d9faf9af1a429b60f88b101a637,
     type: 2}
   bounceDetonateDelay: 0.25
+  explosionRadius: 10
+  explosionForce: 50
 --- !u!114 &114422471054305720
 MonoBehaviour:
   m_ObjectHideFlags: 1

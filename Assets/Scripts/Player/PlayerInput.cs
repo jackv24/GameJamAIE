@@ -44,7 +44,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.gameRunning && ((device != null && device.AnyButtonWasPressed) || (controllerIndex < 1 && Input.anyKeyDown)))
+        if (!GameManager.instance.gameRunning && ((device != null && device.AnyButtonWasPressed) || (controllerIndex < 1 && Input.GetButtonDown("Jump"))))
             GameManager.instance.ReadyPlayer(controllerIndex);
     }
 }

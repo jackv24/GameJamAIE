@@ -20,6 +20,7 @@ public class PlayerMove : MonoBehaviour
 
     private Vector2 inputVector;
     private Vector3 moveVector;
+    private Vector3 impactVector;
 
     private Vector3 cameraForward;
     private Vector3 cameraRight;
@@ -90,13 +91,21 @@ public class PlayerMove : MonoBehaviour
 
             //Apply gravity if the controller is not grounded
             if (!controller.isGrounded)
+            {
                 moveVector.y -= gravity * Time.deltaTime;
+
+                if(impactVector.y > 0)
+                    impactVector.y -= gravity * Time.deltaTime;
+            }
 
             //Face forward
             transform.rotation = Quaternion.LookRotation(cameraForward, Vector3.up);
 
             //Finally, move controller
-            controller.Move(moveVector * Time.deltaTime);
+            controller.Move((moveVector + impactVector) * Time.deltaTime);
+
+            if (controller.isGrounded)
+                impactVector = Vector3.Lerp(impactVector, Vector3.zero, 0.1f);
         }
     }
 
@@ -109,5 +118,15 @@ public class PlayerMove : MonoBehaviour
         cameraRight = right;
         cameraRight.y = 0;
         cameraRight.Normalize();
+    }
+
+    public void AddImpact(Vector3 direction, float force)
+    {
+        direction.Normalize();
+
+        if (direction.y < 0)
+            direction.y *= -1;
+
+        impactVector = direction * force;
     }
 }

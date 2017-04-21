@@ -1392,7 +1392,7 @@ MonoBehaviour:
   bombPrefab: {fileID: 1265672481065888, guid: a19c8aa92c8bbf240ae40feb7e24b6b5, type: 2}
   groundReticlePrefab: {fileID: 1206181720073024, guid: 078f5f199893f234e921168bc21f5db7,
     type: 2}
-  maxAimDistance: 15
+  maxAimDistance: 20
   fireAngle: 45
   aimCam: {fileID: 0}
   groundLayer:
