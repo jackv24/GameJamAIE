@@ -17,7 +17,6 @@ public class MoveToTheNodes : MonoBehaviour {
 
     void Start()
     {
-        currentNode++;
         endMarker = selectorArr[currentNode].transform;
     }
     void Update()
