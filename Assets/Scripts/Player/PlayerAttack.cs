@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
 
     void LateUpdate()
     {
-        if(reticle && aimCam && ((playerInput.ControllerConnected && playerInput.aim.IsPressed) || (playerInput.controllerIndex < 1 && Input.GetMouseButton(0))))
+        if(reticle && aimCam && ((playerInput.ControllerConnected && playerInput.aim.IsPressed) || (playerInput.controllerIndex < 1 && Input.GetMouseButton(0))) && GameManager.instance.gameRunning)
         {
             reticle.SetActive(true);
             shouldThrowBomb = true;

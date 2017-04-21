@@ -2,9 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InControl;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
+    [HideInInspector]
+    public bool gameRunning = false;
+    private bool[] readyPlayers;
+    private PlayerUI[] playersUI;
+
+    public int gameLength = 120;
+    public int gameTimeLeft;
+
+    [Space()]
+    public Text timerText;
+
+    [Space()]
     public GameObject playerPrefab;
     public GameObject cameraPrefab;
     public GameObject canvasPrefab;
@@ -14,12 +30,84 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        instance = this;
+
+        SpawnPlayers();
+
+        if (timerText)
+            timerText.gameObject.SetActive(false);
+    }
+
+    public void ReadyPlayer(int index)
+    {
+        readyPlayers[index] = true;
+
+        int readyAmount = 0;
+
+        foreach (bool ready in readyPlayers)
+            if (ready)
+                readyAmount++;
+
+        if (playersUI[index])
+            playersUI[index].readyText.gameObject.SetActive(false);
+
+        if (readyAmount == readyPlayers.Length)
+            StartCoroutine("GameTimer");
+    }
+
+    IEnumerator GameTimer()
+    {
+        if(timerText)
+            timerText.gameObject.SetActive(true);
+
+        for (int i = 3; i >= 0; i--)
+        {
+            if (timerText)
+                timerText.text = string.Format("<color=red><size=56>{0}</size></color>", i);
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        gameRunning = true;
+
+        gameTimeLeft = gameLength;
+
+        while(gameTimeLeft >= 0)
+        {
+            if (timerText)
+            {
+                if(gameTimeLeft > 10)
+                    timerText.text = string.Format("{0}:{1}", Mathf.FloorToInt(gameTimeLeft / 60).ToString("00"), (gameTimeLeft % 60).ToString("00"));
+                else
+                    timerText.text = string.Format("<color=red><size=56>{0}</size></color>", gameTimeLeft);
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            gameTimeLeft--;
+        }
+
+        gameRunning = false;
+
+        if (timerText)
+            timerText.text = "Game Over";
+
+        yield return new WaitForSeconds(5f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void SpawnPlayers()
+    {
         int controllerCount = InputManager.Devices.Count;
 
         if (controllerCount < 1)
             controllerCount = 1;
 
-        for(int i = 0; i < controllerCount; i++)
+        readyPlayers = new bool[controllerCount];
+        playersUI = new PlayerUI[controllerCount];
+
+        for (int i = 0; i < controllerCount; i++)
         {
             //Player
             GameObject player = (GameObject)Instantiate(playerPrefab, new Vector3(spawnOffsetX * i, 0, 0), Quaternion.identity);
@@ -73,6 +161,9 @@ public class GameManager : MonoBehaviour
 
             PlayerAttack attack = player.GetComponent<PlayerAttack>();
             attack.aimCam = cam;
+
+            readyPlayers[i] = false;
+            playersUI[i] = hud;
         }
     }
 }
