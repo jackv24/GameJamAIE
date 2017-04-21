@@ -14,6 +14,9 @@ public class PlayerAttack : MonoBehaviour
     [Space()]
     public float fireAngle = 45.0f;
 
+    public float fireDelay = 0.5f;
+    private float nextFireTime = 0;
+
     [HideInInspector]
     public Camera aimCam;
     public LayerMask groundLayer;
@@ -34,7 +37,13 @@ public class PlayerAttack : MonoBehaviour
         if(reticle && aimCam && ((playerInput.ControllerConnected && playerInput.aim.IsPressed) || (playerInput.controllerIndex < 1 && Input.GetMouseButton(0))) && GameManager.instance.gameRunning)
         {
             reticle.SetActive(true);
-            shouldThrowBomb = true;
+
+            if (Time.time >= nextFireTime)
+            {
+                nextFireTime = Time.time + fireDelay;
+
+                shouldThrowBomb = true;
+            }
 
             RaycastHit hitInfo;
 
@@ -55,12 +64,8 @@ public class PlayerAttack : MonoBehaviour
                 reticle.transform.position = hitInfo.point;
                 reticle.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
             }
-        }
-        else if (reticle.activeSelf)
-        {
-            reticle.SetActive(false);
 
-            if(shouldThrowBomb)
+            if (shouldThrowBomb)
             {
                 shouldThrowBomb = false;
 
@@ -92,6 +97,10 @@ public class PlayerAttack : MonoBehaviour
 
                 body.AddForce(finalVelocity, ForceMode.VelocityChange);
             }
+        }
+        else if (reticle.activeSelf)
+        {
+            reticle.SetActive(false);
         }
     }
 }
