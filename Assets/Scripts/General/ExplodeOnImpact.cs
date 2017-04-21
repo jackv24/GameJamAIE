@@ -13,9 +13,19 @@ public class ExplodeOnImpact : MonoBehaviour
     public float explosionRadius = 5.0f;
     public float explosionForce = 10.0f;
 
-    void OnCollisionEnter()
+    public GameObject explosionTarget;
+
+    void OnCollisionEnter(Collision col)
     {
-        StartCoroutine("ExplodeWithDelay");
+        if(explosionTarget)
+        {
+            if (col.gameObject.name == explosionTarget.name)
+            {
+                StartCoroutine("ExplodeWithDelay");
+            }
+        }
+        else
+            StartCoroutine("ExplodeWithDelay");
     }
 
     IEnumerator ExplodeWithDelay()
