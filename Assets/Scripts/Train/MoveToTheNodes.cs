@@ -48,7 +48,8 @@ public class MoveToTheNodes : MonoBehaviour {
                 currentNode++;
 
                 if (currentNode >= selectorArr.Length)
-                    currentNode = 0;
+                    gameObject.SetActive(false);
+                    //currentNode = 0;
 
                 endMarker = selectorArr[currentNode].transform;
             }
