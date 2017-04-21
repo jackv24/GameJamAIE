@@ -698,6 +698,20 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1665369771925000, guid: 64612d9faf9af1a429b60f88b101a637, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82758882150457824, guid: 64612d9faf9af1a429b60f88b101a637,
+        type: 2}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 82758882150457824, guid: 64612d9faf9af1a429b60f88b101a637,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64612d9faf9af1a429b60f88b101a637, type: 2}
   m_IsPrefabParent: 0
@@ -974,6 +988,20 @@ Prefab:
     - target: {fileID: 1665369771925000, guid: 64612d9faf9af1a429b60f88b101a637, type: 2}
       propertyPath: m_Name
       value: ExplsionParticle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665369771925000, guid: 64612d9faf9af1a429b60f88b101a637, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82758882150457824, guid: 64612d9faf9af1a429b60f88b101a637,
+        type: 2}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 82758882150457824, guid: 64612d9faf9af1a429b60f88b101a637,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64612d9faf9af1a429b60f88b101a637, type: 2}
