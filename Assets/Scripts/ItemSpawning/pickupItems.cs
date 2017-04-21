@@ -28,12 +28,14 @@ public class pickupItems : MonoBehaviour {
         {
             stats.AddScore(score);
         }
-       particle = Instantiate(particles,  other.transform.position, Quaternion.identity);
-       gameObject.SetActive(false);
-       if(Time.deltaTime > 0.5)
+        if (particles)
         {
-            Destroy(particle);
+            particle = ObjectPooler.GetPooledObject(particles);
+            particle.transform.position = new Vector3(other.transform.position.x, other.transform.position.y+1, other.transform.position.z);
         }
+        gameObject.SetActive(false);
+
+
 
         if (OnPickup != null)
             OnPickup();
