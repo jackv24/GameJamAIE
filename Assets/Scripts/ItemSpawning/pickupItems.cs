@@ -10,6 +10,8 @@ public class pickupItems : MonoBehaviour {
     public float bobCentre = 1.5f;
     public float bobSpeed = 3;
     public float bobVarition = 40;
+    public GameObject particles;
+    GameObject particle;
     
     float bobHeight;
     bool GoUp;
@@ -23,8 +25,12 @@ public class pickupItems : MonoBehaviour {
         {
             stats.AddScore(score);
         }
-
+       particle = Instantiate(particles,  other.transform.position, Quaternion.identity);
        gameObject.SetActive(false);
+       if(Time.deltaTime > 0.5)
+        {
+            Destroy(particle);
+        }
     }
     void Update()
     {
