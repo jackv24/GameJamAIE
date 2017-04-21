@@ -17,8 +17,12 @@ public class GameManager : MonoBehaviour
     public int gameLength = 120;
     public int gameTimeLeft;
 
+    private int pickupCount = 0;
+
     [Space()]
     public Text timerText;
+    public Text pickupText;
+    private string pickupTextString;
 
     [Space()]
     public GameObject playerPrefab;
@@ -36,6 +40,30 @@ public class GameManager : MonoBehaviour
 
         if (timerText)
             timerText.gameObject.SetActive(false);
+
+        if (pickupText)
+            pickupTextString = pickupText.text;
+
+        pickupItems[] pickups = FindObjectsOfType<pickupItems>();
+
+        pickupCount = pickups.Length;
+
+        if(pickupText)
+            pickupText.text = string.Format(pickupTextString, pickupCount);
+
+        foreach (pickupItems p in pickups)
+        {
+            p.OnPickup += delegate
+            {
+                pickupCount--;
+
+                if(pickupText)
+                    pickupText.text = string.Format(pickupTextString, pickupCount);
+
+                if (pickupCount <= 0)
+                    gameTimeLeft = 0;
+            };
+        }
     }
 
     public void ReadyPlayer(int index)
@@ -93,6 +121,8 @@ public class GameManager : MonoBehaviour
             timerText.text = "Game Over";
 
         yield return new WaitForSeconds(5f);
+
+        ObjectPooler.PurgePools();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

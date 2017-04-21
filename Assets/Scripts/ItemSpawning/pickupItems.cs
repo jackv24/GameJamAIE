@@ -10,7 +10,10 @@ public class pickupItems : MonoBehaviour {
     public float bobCentre = 1.5f;
     public float bobSpeed = 3;
     public float bobVarition = 40;
-    
+
+    public delegate void StandardEvent();
+    public event StandardEvent OnPickup;
+
     float bobHeight;
     bool GoUp;
 	// Use this for initialization
@@ -23,6 +26,9 @@ public class pickupItems : MonoBehaviour {
         {
             stats.AddScore(score);
         }
+
+        if (OnPickup != null)
+            OnPickup();
 
        gameObject.SetActive(false);
     }

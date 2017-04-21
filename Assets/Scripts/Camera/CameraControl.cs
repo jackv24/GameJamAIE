@@ -55,14 +55,10 @@ public class CameraControl : MonoBehaviour
                 currentDistance = Mathf.Lerp(currentDistance, distance, zoomOutSpeed * Time.deltaTime);
 
             //Move camera
-            Vector2 input;
-            if (GameManager.instance.gameRunning)
-                input = new Vector2(
+            Vector2 input = new Vector2(
                 (playerInput.ControllerConnected ? playerInput.cameraX : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse X") : 0),
                 (playerInput.ControllerConnected ? playerInput.cameraY : 0.0f) + (playerInput.controllerIndex < 1 ? Input.GetAxisRaw("Mouse Y") : 0)
                 ) * sensitivity;
-            else
-                input = Vector2.zero;
 
             //Move camera up/down
             pitch -= input.y * Time.deltaTime;
