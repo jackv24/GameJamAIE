@@ -9,19 +9,15 @@ public class MoveToTheNodes : MonoBehaviour {
     Transform endMarker;
 
     Vector3 lastPos;
-    public GameObject smoke;
 
     public GameObject[] selectorArr;
     bool startTrip = false;
     public float angleBetween = 0.0F;
-
-    public float delay = 10f;
     
 
     void Start()
     {
         endMarker = selectorArr[currentNode].transform;
-        smoke.SetActive(true);
 
         if (GameManager.instance)
             GameManager.instance.OnGameStart += delegate { startTrip = true; };

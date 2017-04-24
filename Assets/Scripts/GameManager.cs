@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public delegate void NormalEvent();
     public event NormalEvent OnGameStart;
 
+    public GameObject trainSmoke;
+
     [HideInInspector]
     public bool gameRunning = false;
     private bool gameStarted = false;
@@ -91,12 +93,15 @@ public class GameManager : MonoBehaviour
                 gameStarted = true;
 
                 StartCoroutine("GameTimer");
+
+                trainSmoke.SetActive(true);
             }
         }
     }
 
     IEnumerator GameTimer()
     {
+
         if(timerText)
             timerText.gameObject.SetActive(true);
 
