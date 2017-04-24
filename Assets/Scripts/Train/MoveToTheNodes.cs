@@ -9,23 +9,28 @@ public class MoveToTheNodes : MonoBehaviour {
     Transform endMarker;
 
     Vector3 lastPos;
+    public GameObject smoke;
 
     public GameObject[] selectorArr;
     bool startTrip = false;
     public float angleBetween = 0.0F;
 
+    public float delay = 10f;
+    
 
     void Start()
     {
         endMarker = selectorArr[currentNode].transform;
+        smoke.SetActive(true);
+        startTrip = true;
     }
     void Update()
     {
         //remove stuff below for your run, and either put a new button in, or call MoveTrain in another script.
-        if (Input.GetKeyDown(KeyCode.P))
+        /*if (Input.GetKeyDown(KeyCode.P))
         {
             startTrip = true;
-        }
+        }*/
         if (startTrip)
             MoveTrain();
 
