@@ -22,7 +22,9 @@ public class MoveToTheNodes : MonoBehaviour {
     {
         endMarker = selectorArr[currentNode].transform;
         smoke.SetActive(true);
-        startTrip = true;
+
+        if (GameManager.instance)
+            GameManager.instance.OnGameStart += delegate { startTrip = true; };
     }
     void Update()
     {

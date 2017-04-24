@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public delegate void NormalEvent();
+    public event NormalEvent OnGameStart;
+
     [HideInInspector]
     public bool gameRunning = false;
     private bool gameStarted = false;
@@ -106,6 +109,9 @@ public class GameManager : MonoBehaviour
         }
 
         gameRunning = true;
+
+        if (OnGameStart != null)
+            OnGameStart();
 
         gameTimeLeft = gameLength;
 
