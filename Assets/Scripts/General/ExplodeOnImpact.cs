@@ -17,9 +17,16 @@ public class ExplodeOnImpact : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(explosionTarget)
+        AttemptChain(gameObject);
+    }
+
+    public void AttemptChain(GameObject source)
+    {
+        StopCoroutine("ExplodeWithDelay");
+
+        if (explosionTarget)
         {
-            if (col.gameObject.name == explosionTarget.name)
+            if (source.name == explosionTarget.name)
             {
                 StartCoroutine("ExplodeWithDelay");
             }
@@ -47,6 +54,7 @@ public class ExplodeOnImpact : MonoBehaviour
         foreach(Collider col in cols)
         {
             PlayerMove move = col.GetComponent<PlayerMove>();
+            ExplodeOnImpact impact = col.GetComponent<ExplodeOnImpact>();
 
             if (move)
             {
@@ -56,6 +64,11 @@ public class ExplodeOnImpact : MonoBehaviour
                 dir.Normalize();
 
                 move.AddImpact(dir, explosionForce);
+            }
+
+            if (impact)
+            {
+                impact.AttemptChain(gameObject);
             }
         }
 
